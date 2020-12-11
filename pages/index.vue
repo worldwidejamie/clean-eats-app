@@ -2,6 +2,7 @@
   <div class="container">
     <div>
       <h1 class="title">Clean Eats</h1>
+      <SearchComponent />
       <RestaurantList />
     </div>
   </div>
