@@ -10,10 +10,7 @@
         <p>It's probably better than Jamie's</p>
       </li> -->
 
-      <li
-        v-for="restaurant in restaurants"
-        :key="parseInt(restaurant.inspection_id)"
-      >
+      <li v-for="restaurant in restaurants" :key="restaurant.inspection_id">
         <span> {{ toTitleCase(restaurant.aka_name) }} </span>
         <span>{{ restaurant.results }}</span>
       </li>
@@ -22,7 +19,7 @@
 </template>
 
 <script>
-// const axios = require('axios')
+const axios = require('axios')
 export default {
   data() {
     return {
@@ -34,16 +31,17 @@ export default {
   },
   methods: {
     async getRestaurants() {
-      const response = await fetch(
+      const response = await axios(
         'https://data.cityofchicago.org/resource/cwig-ma7x.json',
         {
+          method: 'get',
           params: {
             $limit: '10',
+            $q: 'progress',
           },
         }
       )
-      const restaurants = await response.json()
-      this.restaurants = restaurants
+      this.restaurants = response.data
     },
     // Function found in this thread:
     // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
