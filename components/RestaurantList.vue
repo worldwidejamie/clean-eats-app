@@ -10,8 +10,12 @@
         <p>It's probably better than Jamie's</p>
       </li> -->
 
-      <li v-for="restaurant in restaurants" :key="restaurant.inspection_id">
-        <span>{{ restaurant.inspection_id }}</span>
+      <li
+        v-for="restaurant in restaurants"
+        :key="parseInt(restaurant.inspection_id)"
+      >
+        <span> {{ toTitleCase(restaurant.aka_name) }} </span>
+        <span>{{ restaurant.results }}</span>
       </li>
     </ul>
   </div>
@@ -31,7 +35,7 @@ export default {
   methods: {
     async getRestaurants() {
       const response = await fetch(
-        'https://data.cityofchicago.org/resource/cwig-ma7x.json?$limit=10',
+        'https://data.cityofchicago.org/resource/cwig-ma7x.json?$limit=3',
         {
           params: {
             $limit: 10,
@@ -41,17 +45,23 @@ export default {
       const restaurants = await response.json()
       this.restaurants = restaurants
     },
-    // async getRestaurants() {
-    //   const { response } = await axios.get(
-    //     'https://data.cityofchicago.org/resource/cwig-ma7x.json',
-    //     {
-    //       params: {
-    //         $limit: 10,
-    //       },
-    //     }
-    //   )
-    //   this.restaurants = response
-    // },
+    // Function found in this thread:
+    // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
+    // TODO: How to handle edge cases when an establishment's name isn't returned properly formatted? For example, Progress Bar comes back as PROGRESSBAR. Check the API docs for potential solutions?
+    toTitleCase(str) {
+      let upper = true
+      let newStr = ''
+      for (let i = 0, l = str.length; i < l; i++) {
+        if (str[i] === ' ') {
+          upper = true
+          newStr += ' '
+          continue
+        }
+        newStr += upper ? str[i].toUpperCase() : str[i].toLowerCase()
+        upper = false
+      }
+      return newStr
+    },
   },
 }
 </script>
