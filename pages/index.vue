@@ -2,31 +2,37 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">clean-eats</h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
+      <h1 class="title">Clean Eats</h1>
+      <RestaurantList />
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+// export default {
+//   async fetch({ $axios, error }) {
+//     try {
+//       const restaurantsReq = await $axios(
+//         'https://data.cityofchicago.org/resource/cwig-ma7x.json',
+//         {
+//           method: 'get',
+//           params: {
+//             $limit: 10,
+//           },
+//         }
+//       ).then((res) => res.data[0])
+//       this.restaurnts = restaurantsReq
+//       // console.log(restaurants)
+//     } catch (e) {
+//       error(e)
+//     }
+//   },
+//   data() {
+//     return {
+//       restaurants: [],
+//     }
+//   },
+// }
 </script>
 
 <style>
