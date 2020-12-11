@@ -35,10 +35,10 @@ export default {
   methods: {
     async getRestaurants() {
       const response = await fetch(
-        'https://data.cityofchicago.org/resource/cwig-ma7x.json?$limit=3',
+        'https://data.cityofchicago.org/resource/cwig-ma7x.json',
         {
           params: {
-            $limit: 10,
+            $limit: '10',
           },
         }
       )
