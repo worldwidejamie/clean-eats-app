@@ -5,6 +5,7 @@
         v-for="restaurant in restaurants"
         :key="restaurant.inspection_id"
         class="restaurant-list__item"
+        :class="getResultsClass(restaurant.results)"
       >
         <span class="restaurant-list__item__title">
           {{ toTitleCase(restaurant.aka_name) }}
@@ -41,6 +42,50 @@ export default {
         }
       )
       this.restaurants = response.data
+    },
+    // Return a class in response to inspection results
+
+    getResultsClass(response) {
+      let resultClass
+      switch (response) {
+        case 'Pass':
+          resultClass = 'pass'
+          break
+        case 'Pass w/ Conditions':
+          resultClass = 'pass-conditional'
+          break
+        case 'Fail':
+          resultClass = 'fail'
+          break
+        default:
+          return ''
+      }
+      return resultClass
+      // console.log(response)
+      // if (response === 'Pass') {
+      //   console.log('pass')
+      //   return 'pass'
+      // } else {
+      //   console.log('fail')
+      // }
+      // if (
+      //   response !== 'Pass' ||
+      //   response !== 'Fail' ||
+      //   response !== 'Pass w/ Conditions'
+      // ) {
+      //   return ''
+      // } else {
+      //   if (response === 'Pass') {
+      //     return 'pass'
+      //   }
+      //   if (response === 'Fail') {
+      //     return 'fail'
+      //   }
+      //   if (response === 'Pass w/ Conditions') {
+      //     return 'exceptions'
+      //   }
+      // }
+      // console.log(response)
     },
     // Function found in this thread:
     // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
