@@ -87,7 +87,6 @@ export default {
         (restaurant) => restaurant.results === 'Fail'
       )
       this.failRestaurants = fail
-      console.log(pass)
     },
     // Return a class in response to inspection results
 
