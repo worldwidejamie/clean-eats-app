@@ -18,6 +18,8 @@ Regardless of the outcome, this was a great experience and I have learned a lot 
 
 Did you know the city of Chicago has ~500 different categories of food serving facilities? Blockbuster Video, for example.
 
+Also, I didn't properly follow instructions regarding the pull request. I see now that I should have been working on a `{working-branch}` instead of multiple branches and merging into main.
+
 Thank so much and talk soon!
 
 -Jamie
