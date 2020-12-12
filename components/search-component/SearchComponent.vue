@@ -1,13 +1,11 @@
 <template>
   <div class="search__wrapper">
-    <div class="search__field">
-      <input
-        v-model="searchQuery"
-        type="search"
-        autocomplete="off"
-        placeholder="Find Clean Eatin'"
-      />
-    </div>
+    <v-text-field
+      v-model="searchQuery"
+      type="search"
+      autocomplete="off"
+      label="Find Clean Eatin'"
+    ></v-text-field>
   </div>
 </template>
 

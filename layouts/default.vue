@@ -1,7 +1,9 @@
 <template>
-  <div class="clean-eats-app">
-    <Nuxt />
-  </div>
+  <v-app>
+    <v-main class="clean-eats-app">
+      <Nuxt />
+    </v-main>
+  </v-app>
 </template>
 
 <style>

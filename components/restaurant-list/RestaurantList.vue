@@ -1,21 +1,38 @@
 <template>
-  <div class="restaurant-list__wrapper">
-    <ul class="restaurant-list">
-      <li
+  <v-row dense class="restaurant-list__wrapper">
+    <v-col cols="12" class="restaurant-list d-flex flex-column">
+      <v-card
         v-for="restaurant in restaurants"
         :key="restaurant.inspection_id"
-        class="restaurant-list__item"
+        class="restaurant-list__item mt-5"
         :class="getResultsClass(restaurant.results)"
       >
-        <span class="restaurant-list__item__title">
+        <v-card-title class="restaurant-list__item__title">
           {{ toTitleCase(restaurant.aka_name) }}
-        </span>
-        <span class="restaurant-list__item__result">{{
+        </v-card-title>
+        <v-card-subtitle class="restaurant-list__item__result">{{
           restaurant.results
-        }}</span>
-      </li>
-    </ul>
-  </div>
+        }}</v-card-subtitle>
+
+        <v-card-actions>
+          <v-btn text color="orange" @click="show = !show"> But Why?</v-btn>
+        </v-card-actions>
+        <v-expand-transition>
+          <div v-show="show">
+            <v-divider></v-divider>
+
+            <v-card-text>
+              I'm a thing. But, like most politicians, he promised more than he
+              could deliver. You won't have time for sleeping, soldier, not with
+              all the bed making you'll be doing. Then we'll go with that data
+              file! Hey, you add a one and two zeros to that or we walk! You're
+              going to do his laundry? I've got to find a way to escape.
+            </v-card-text>
+          </div>
+        </v-expand-transition>
+      </v-card>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -23,6 +40,7 @@ const axios = require('axios')
 export default {
   data() {
     return {
+      show: false,
       restaurants: [],
     }
   },
