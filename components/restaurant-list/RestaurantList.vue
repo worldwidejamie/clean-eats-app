@@ -1,36 +1,42 @@
 <template>
   <v-row dense class="restaurant-list__wrapper">
     <v-col cols="12" class="restaurant-list d-flex flex-column">
-      <v-card
-        v-for="restaurant in restaurants"
-        :key="restaurant.inspection_id"
-        class="restaurant-list__item mt-5"
-        :class="getResultsClass(restaurant.results)"
-      >
-        <v-card-title class="restaurant-list__item__title">
-          {{ toTitleCase(restaurant.aka_name) }}
-        </v-card-title>
-        <v-card-subtitle class="restaurant-list__item__result">{{
-          restaurant.results
-        }}</v-card-subtitle>
+      <v-item-group>
+        <v-item
+          v-for="passRestaurant in passRestaurants"
+          v-slot="{ active, toggle }"
+          :key="passRestaurant.inspection_id"
+        >
+          <v-card
+            class="restaurant-list__item mt-5"
+            :class="getResultsClass(passRestaurants.results)"
+          >
+            <v-card-title class="restaurant-list__item__title">
+              {{ toTitleCase(passRestaurant.aka_name) }}
+            </v-card-title>
+            <v-card-subtitle class="restaurant-list__item__result">{{
+              passRestaurant.results
+            }}</v-card-subtitle>
+            <v-card-actions>
+              <v-btn text color="orange" @click="toggle"> But Why?</v-btn>
+            </v-card-actions>
+            <v-expand-transition>
+              <div v-show="active">
+                <v-divider></v-divider>
 
-        <v-card-actions>
-          <v-btn text color="orange" @click="show = !show"> But Why?</v-btn>
-        </v-card-actions>
-        <v-expand-transition>
-          <div v-show="show">
-            <v-divider></v-divider>
-
-            <v-card-text>
-              I'm a thing. But, like most politicians, he promised more than he
-              could deliver. You won't have time for sleeping, soldier, not with
-              all the bed making you'll be doing. Then we'll go with that data
-              file! Hey, you add a one and two zeros to that or we walk! You're
-              going to do his laundry? I've got to find a way to escape.
-            </v-card-text>
-          </div>
-        </v-expand-transition>
-      </v-card>
+                <v-card-text>
+                  I'm a thing. But, like most politicians, he promised more than
+                  he could deliver. You won't have time for sleeping, soldier,
+                  not with all the bed making you'll be doing. Then we'll go
+                  with that data file! Hey, you add a one and two zeros to that
+                  or we walk! You're going to do his laundry? I've got to find a
+                  way to escape.
+                </v-card-text>
+              </div>
+            </v-expand-transition>
+          </v-card>
+        </v-item>
+      </v-item-group>
     </v-col>
   </v-row>
 </template>
@@ -40,8 +46,9 @@ const axios = require('axios')
 export default {
   data() {
     return {
-      show: false,
-      restaurants: [],
+      // restaurants: [],
+      passRestaurants: [],
+      failRestaurants: [],
     }
   },
   beforeMount() {
@@ -49,17 +56,38 @@ export default {
   },
   methods: {
     async getRestaurants() {
+      // TODO: Add error handling
       const response = await axios(
         'https://data.cityofchicago.org/resource/cwig-ma7x.json',
         {
           method: 'get',
           params: {
-            $limit: '10',
-            $q: 'progress',
+            $limit: '75',
           },
         }
       )
-      this.restaurants = response.data
+
+      // Separate response into pass/fail arrays
+
+      // this.restaurants = response.data
+      const restaurantResponse = response.data
+      // const failRestaurants
+
+      // Pass Restaurants array
+      const pass = restaurantResponse.filter(
+        (restaurant) =>
+          restaurant.results === 'Pass' ||
+          restaurant.results === 'Pass w/ Conditions'
+      )
+
+      this.passRestaurants = pass
+
+      // Fail Restaurant Array
+      const fail = restaurantResponse.filter(
+        (restaurant) => restaurant.results === 'Fail'
+      )
+      this.failRestaurants = fail
+      console.log(pass)
     },
     // Return a class in response to inspection results
 
@@ -79,36 +107,14 @@ export default {
           return ''
       }
       return resultClass
-      // console.log(response)
-      // if (response === 'Pass') {
-      //   console.log('pass')
-      //   return 'pass'
-      // } else {
-      //   console.log('fail')
-      // }
-      // if (
-      //   response !== 'Pass' ||
-      //   response !== 'Fail' ||
-      //   response !== 'Pass w/ Conditions'
-      // ) {
-      //   return ''
-      // } else {
-      //   if (response === 'Pass') {
-      //     return 'pass'
-      //   }
-      //   if (response === 'Fail') {
-      //     return 'fail'
-      //   }
-      //   if (response === 'Pass w/ Conditions') {
-      //     return 'exceptions'
-      //   }
-      // }
-      // console.log(response)
     },
     // Function found in this thread:
     // https://stackoverflow.com/questions/196972/convert-string-to-title-case-with-javascript
     // TODO: How to handle edge cases when an establishment's name isn't returned properly formatted? For example, Progress Bar comes back as PROGRESSBAR. Check the API docs for potential solutions?
     toTitleCase(str) {
+      if (!str) {
+        return
+      }
       let upper = true
       let newStr = ''
       for (let i = 0, l = str.length; i < l; i++) {
@@ -122,6 +128,8 @@ export default {
       }
       return newStr
     },
+
+    // TODO: Setup filter plan: Create new arrays of fail & pass/pass with conditions. Create separate tabs. Fail items are a no go. Pass are a green light. With conditions is a warning.
   },
 }
 </script>
