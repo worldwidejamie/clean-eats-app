@@ -1,43 +1,79 @@
 <template>
   <v-row dense class="restaurant-list__wrapper">
-    <v-col cols="12" class="restaurant-list d-flex flex-column">
-      <v-item-group>
-        <v-item
-          v-for="passRestaurant in passRestaurants"
-          v-slot="{ active, toggle }"
+    <v-tabs v-model="tabs">
+      <v-col v-for="resultTab in resultTabs" :key="resultTab" cols="6">
+        <v-tab>
+          {{ resultTab }}
+        </v-tab>
+      </v-col>
+    </v-tabs>
+    <v-tabs-items v-model="tabs">
+      <v-tab-item>
+        <v-card
+          v-for="passRestaurant in restaurants[0].passRest"
           :key="passRestaurant.inspection_id"
+          class="restaurant-list__item mt-5"
+          :class="passRestaurant.results"
         >
-          <v-card
-            class="restaurant-list__item mt-5"
-            :class="getResultsClass(passRestaurants.results)"
-          >
-            <v-card-title class="restaurant-list__item__title">
-              {{ toTitleCase(passRestaurant.aka_name) }}
-            </v-card-title>
-            <v-card-subtitle class="restaurant-list__item__result">{{
-              passRestaurant.results
-            }}</v-card-subtitle>
-            <v-card-actions>
-              <v-btn text color="orange" @click="toggle"> But Why?</v-btn>
-            </v-card-actions>
-            <v-expand-transition>
-              <div v-show="active">
-                <v-divider></v-divider>
+          <v-card-title class="restaurant-list__item__title">
+            {{ toTitleCase(passRestaurant.aka_name) }}
+          </v-card-title>
+          <v-card-subtitle class="restaurant-list__item__result">{{
+            passRestaurant.results
+          }}</v-card-subtitle>
+          <v-card-actions>
+            <v-btn text color="orange" @click="toggle"> But Why?</v-btn>
+          </v-card-actions>
+          <v-expand-transition>
+            <div>
+              <v-divider></v-divider>
 
-                <v-card-text>
-                  I'm a thing. But, like most politicians, he promised more than
-                  he could deliver. You won't have time for sleeping, soldier,
-                  not with all the bed making you'll be doing. Then we'll go
-                  with that data file! Hey, you add a one and two zeros to that
-                  or we walk! You're going to do his laundry? I've got to find a
-                  way to escape.
-                </v-card-text>
-              </div>
-            </v-expand-transition>
-          </v-card>
-        </v-item>
-      </v-item-group>
-    </v-col>
+              <v-card-text>
+                I'm a thing. But, like most politicians, he promised more than
+                he could deliver. You won't have time for sleeping, soldier, not
+                with all the bed making you'll be doing. Then we'll go with that
+                data file! Hey, you add a one and two zeros to that or we walk!
+                You're going to do his laundry? I've got to find a way to
+                escape.
+              </v-card-text>
+            </div>
+          </v-expand-transition>
+        </v-card>
+      </v-tab-item>
+      <v-tab-item>
+        <v-card
+          v-for="failRestaurant in restaurants[1].failRest"
+          :key="failRestaurant.inspection_id"
+          class="restaurant-list__item mt-5"
+          :class="failRestaurant.results"
+        >
+          <v-card-title class="restaurant-list__item__title">
+            {{ toTitleCase(failRestaurant.aka_name) }}
+          </v-card-title>
+          <v-card-subtitle class="restaurant-list__item__result">{{
+            failRestaurant.results
+          }}</v-card-subtitle>
+          <v-card-actions>
+            <v-btn text color="orange"> But Why?</v-btn>
+          </v-card-actions>
+          <v-expand-transition>
+            <div>
+              <v-divider></v-divider>
+
+              <v-card-text>
+                I'm a thing. But, like most politicians, he promised more than
+                he could deliver. You won't have time for sleeping, soldier, not
+                with all the bed making you'll be doing. Then we'll go with that
+                data file! Hey, you add a one and two zeros to that or we walk!
+                You're going to do his laundry? I've got to find a way to
+                escape.
+              </v-card-text>
+            </div>
+          </v-expand-transition>
+        </v-card>
+      </v-tab-item>
+      <!-- </v-col> -->
+    </v-tabs-items>
   </v-row>
 </template>
 
@@ -46,9 +82,16 @@ const axios = require('axios')
 export default {
   data() {
     return {
-      // restaurants: [],
-      passRestaurants: [],
-      failRestaurants: [],
+      resultTabs: ['pass', 'fail'],
+      tabs: null,
+      restaurants: [
+        {
+          pass: [{ tab: 'pass', passRest: [] }],
+        },
+        {
+          fail: [{ tab: 'fail', failRest: [] }],
+        },
+      ],
     }
   },
   beforeMount() {
@@ -62,7 +105,7 @@ export default {
         {
           method: 'get',
           params: {
-            $limit: '75',
+            $limit: '10',
           },
         }
       )
@@ -79,15 +122,16 @@ export default {
           restaurant.results === 'Pass' ||
           restaurant.results === 'Pass w/ Conditions'
       )
-
-      this.passRestaurants = pass
+      this.restaurants[0].passRest = pass
+      console.log(this.restaurants[0].passRest)
 
       // Fail Restaurant Array
       const fail = restaurantResponse.filter(
         (restaurant) => restaurant.results === 'Fail'
       )
-      this.failRestaurants = fail
-      console.log(pass)
+      // this.failRestaurants = fail
+      this.restaurants[1].failRest = fail
+      console.log(this.restaurants[1].failRest)
     },
     // Return a class in response to inspection results
 
@@ -128,7 +172,6 @@ export default {
       }
       return newStr
     },
-
     // TODO: Setup filter plan: Create new arrays of fail & pass/pass with conditions. Create separate tabs. Fail items are a no go. Pass are a green light. With conditions is a warning.
   },
 }
