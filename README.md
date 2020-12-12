@@ -37,3 +37,7 @@ $ yarn generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+
+## Finally...
+
+Check out features.md for more details on where this project is intended to go.
