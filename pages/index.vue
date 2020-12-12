@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <h1 class="h1">Clean Eats</h1>
     <SearchComponent />
     <RestaurantList />
