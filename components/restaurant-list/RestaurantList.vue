@@ -129,9 +129,7 @@ export default {
       const fail = restaurantResponse.filter(
         (restaurant) => restaurant.results === 'Fail'
       )
-      // this.failRestaurants = fail
-      this.restaurants[1].failRest = fail
-      console.log(this.restaurants[1].failRest)
+      this.failRestaurants = fail
     },
     // Return a class in response to inspection results
 
