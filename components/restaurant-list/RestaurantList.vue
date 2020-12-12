@@ -1,18 +1,17 @@
 <template>
   <div class="restaurant-list__wrapper">
     <ul class="restaurant-list">
-      <!-- <li class="restaurant-list__item">
-        <h2 class="restaurant-name">Jamie's Place</h2>
-        <p>You'll love it here</p>
-      </li>
-      <li class="restaurant-list__item">
-        <h2 class="restaurant-name">Jesse's Joint</h2>
-        <p>It's probably better than Jamie's</p>
-      </li> -->
-
-      <li v-for="restaurant in restaurants" :key="restaurant.inspection_id">
-        <span> {{ toTitleCase(restaurant.aka_name) }} </span>
-        <span>{{ restaurant.results }}</span>
+      <li
+        v-for="restaurant in restaurants"
+        :key="restaurant.inspection_id"
+        class="restaurant-list__item"
+      >
+        <span class="restaurant-list__item__title">
+          {{ toTitleCase(restaurant.aka_name) }}
+        </span>
+        <span class="restaurant-list__item__result">{{
+          restaurant.results
+        }}</span>
       </li>
     </ul>
   </div>
@@ -63,9 +62,3 @@ export default {
   },
 }
 </script>
-
-<style>
-* span {
-  color: cadetblue;
-}
-</style>

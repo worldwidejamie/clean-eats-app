@@ -31,10 +31,6 @@ export default {
 </script>
 
 <style>
-* {
-  color: black;
-}
-
 .search-field {
   margin: 32px 0;
 }

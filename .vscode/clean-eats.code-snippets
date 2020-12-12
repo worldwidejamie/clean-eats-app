@@ -1,0 +1,29 @@
+{
+  // For whatever reason, I've never been able to spell
+  // restauraunt. Created this snippet to help avoid
+  // mistakes and broken code
+
+  "Restaurant": {
+    "prefix": "rest-upper",
+    "body": ["Restaurant"],
+    "description": "Properly spelled, uppercase 'Restaurant'"
+  },
+  "restaurant": {
+    "prefix": "rest-lower",
+    "body": ["restaurant"],
+    "description": "Properly spelled, lowercase 'Restaurant'"
+  },
+  // Snippet to quickly add style add-ons
+  // to module stylesheets. Quick fix and only works
+  // in ./components/scss/**/*.scss
+  "Quickly Add Module Utilities": {
+    "prefix": "style-defaults",
+    "body": [
+      "// Style Utilities",
+      "@import \"../../assets/scss/utils\";",
+      "@import \"../../assets/scss/reset\";",
+      "@import \"../../assets/scss/variables\";"
+    ],
+    "description": "Quickly Add Module Utilities"
+  }
+}

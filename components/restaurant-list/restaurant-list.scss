@@ -1,0 +1,36 @@
+// Style Utilities
+@import '../../assets/scss/utils';
+@import '../../assets/scss/reset';
+@import '../../assets/scss/variables';
+
+.restaurant-list {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    + * {
+      margin-top: 2.5vh;
+    }
+
+    width: 100%;
+    padding: 1em 0.5em;
+    background-color: $primary-alt;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $light;
+    cursor: pointer;
+
+    &__title {
+      font-size: rem-calc(22);
+      font-weight: bold;
+      text-align: left;
+    }
+
+    &__result {
+      text-align: right;
+    }
+  }
+}

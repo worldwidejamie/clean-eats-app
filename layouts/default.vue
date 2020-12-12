@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="clean-eats-app">
     <Nuxt />
   </div>
 </template>

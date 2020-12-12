@@ -1,0 +1,9 @@
+// Gives the app some breathing room
+.clean-eats-app .container {
+  padding: 0 8vw;
+}
+
+// Give the last element on the page a bottom margin
+.clean-eats-app .container > *:last-child {
+  margin-bottom: 5vh;
+}

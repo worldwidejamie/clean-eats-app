@@ -1,10 +1,8 @@
 <template>
   <div class="container">
-    <div>
-      <h1 class="title">Clean Eats</h1>
-      <SearchComponent />
-      <RestaurantList />
-    </div>
+    <h1 class="title">Clean Eats</h1>
+    <SearchComponent />
+    <RestaurantList />
   </div>
 </template>
 
@@ -15,11 +13,15 @@
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
 }
 
+.container > * + * {
+  margin-top: 4vh;
+}
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
