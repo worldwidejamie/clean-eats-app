@@ -63,3 +63,9 @@ export default {
   },
 }
 </script>
+
+<style>
+* span {
+  color: cadetblue;
+}
+</style>

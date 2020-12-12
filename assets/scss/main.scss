@@ -1,0 +1,23 @@
+@import './reset';
+// Add in some style utilities
+@import './utils';
+// Variables
+@import './variables';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+span,
+div,
+p,
+h1,
+h2,
+h3 {
+  color: $light;
+}
