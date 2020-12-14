@@ -78,7 +78,11 @@
 </template>
 
 <script>
-const axios = require('axios')
+// Imports
+// import axios from 'axios'
+import getRestaurants from '../../middleware/data'
+
+// Vue Export
 export default {
   data() {
     return {
@@ -95,39 +99,31 @@ export default {
     }
   },
   beforeMount() {
-    this.getRestaurants()
+    this.returnList()
   },
+  mounted() {},
   methods: {
-    async getRestaurants() {
-      // TODO: Add error handling
-      const response = await axios(
-        'https://data.cityofchicago.org/resource/cwig-ma7x.json',
-        {
-          method: 'get',
-          params: {
-            $limit: '10',
-          },
-        }
-      )
-
-      // Separate response into pass/fail arrays
-      const restaurantResponse = response.data
-
+    async returnList() {
+      const restaurantResponse = await getRestaurants()
+      console.log(restaurantResponse.data)
       // Pass Restaurants array
-      const pass = restaurantResponse.filter(
-        (restaurant) =>
-          restaurant.results === 'Pass' ||
-          restaurant.results === 'Pass w/ Conditions'
-      )
-      this.restaurants[0].passRest = pass
+      // const pass = restaurantResponse.filter(
+      //   (restaurant) =>
+      //     restaurant.results === 'Pass' ||
+      //     restaurant.results === 'Pass w/ Conditions'
+      // )
+      // this.restaurants[0].passRest = pass
 
-      // Fail Restaurant Array
-      const fail = restaurantResponse.filter(
-        (restaurant) => restaurant.results === 'Fail'
-      )
+      // // Fail Restaurant Array
+      // const fail = restaurantResponse.filter(
+      //   (restaurant) => restaurant.results === 'Fail'
+      // )
 
-      this.restaurants[1].failRest = fail
+      // this.restaurants[1].failRest = fail
     },
+    // Separate response into pass/fail arrays
+
+    // },
     // Return a class in response to inspection results
 
     getResultsClass(response) {
