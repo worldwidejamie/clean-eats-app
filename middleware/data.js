@@ -20,6 +20,6 @@ export default function getRestaurants() {
     )
     return response
   } catch (e) {
-    alert(e)
+    console.alert(`HTTP error! status: ${e.status}`)
   }
 }
