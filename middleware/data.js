@@ -6,20 +6,29 @@
  */
 import axios from 'axios'
 
-export default function getRestaurants() {
+export default async function getRestaurants() {
   // TODO: Add error handling
-  try {
-    const response = axios(
-      'https://data.cityofchicago.org/resource/cwig-ma7x.json',
-      {
-        method: 'get',
-        params: {
-          $limit: '10',
-        },
+  // try {
+  const response = await axios(
+    'https://data.cityofchicago.org/resource/cwig-ma7x.json',
+    {
+      method: 'get',
+      params: {
+        $limit: '10',
+      },
+    }
+  )
+    .then((response) => {
+      if (response.ok) {
+        console.log(response.data)
+        return response.data
       }
-    )
-    return response
-  } catch (e) {
-    console.alert(`HTTP error! status: ${e.status}`)
-  }
+    })
+    .then((response) => {
+      this.result = response.body
+    })
+    .catch((err) => {
+      alert(err)
+    })
+  return response
 }
